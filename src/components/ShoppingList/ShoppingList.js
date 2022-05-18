@@ -5,6 +5,7 @@ const ShoppingList = () => {
   const [items, setitems] = useState([]);
   const [item, setitem] = useState("");
   const [itemErrorMsg, setItemErrorMsg] = useState("")
+  
 
   useEffect(() => {
     const loadeditems = JSON.parse(localStorage.getItem("items"));
@@ -32,7 +33,23 @@ const ShoppingList = () => {
     }    
   }
 
-  
+  function deleteitem(id) {
+    let updateditems = items.filter((item) => item.id !== id);
+    localStorage.setItem("items", JSON.stringify(updateditems));
+    setitems(updateditems);
+  }
+
+  function toggleComplete(id) {
+    let updateditems = items.map((item) => {
+      if (item.id === id) {
+        item.completed = !item.completed;
+      }
+      return item;
+    });
+    localStorage.setItem("items", JSON.stringify(updateditems));
+    setitems(updateditems);
+  }
+
   return (
     <div id="item-list">
       <h1>Shopping List</h1>
@@ -47,7 +64,18 @@ const ShoppingList = () => {
       </form>
       {items.map((item) => (
         <div key={item.id} className="item">
-          <div className="itemText">{item.text}</div>
+          <div className="item-text">
+            <input
+              type="checkbox"
+              id="completed"
+              checked={item.completed}
+              onChange={() => toggleComplete(item.id)}
+            />
+              <div className="itemText">{item.text}</div>
+          </div>
+          <div className="item-actions">
+            <button onClick={() => deleteitem(item.id)}>Delete</button>
+          </div>
         </div>
       ))}
     </div>
@@ -55,4 +83,3 @@ const ShoppingList = () => {
 };
 
 export default ShoppingList;
-
