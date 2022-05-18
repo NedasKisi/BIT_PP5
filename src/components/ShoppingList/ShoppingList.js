@@ -4,7 +4,10 @@ import "./ShoppingList.css";
 const ShoppingList = () => {
   const [items, setitems] = useState([]);
   const [item, setitem] = useState("");
+  const [itemEditing, setitemEditing] = useState(null);
+  const [editingText, setEditingText] = useState("");
   const [itemErrorMsg, setItemErrorMsg] = useState("")
+  const [itemErrorMsgLi, setItemErrorMsgLi] = useState("")
   
 
   useEffect(() => {
@@ -50,6 +53,21 @@ const ShoppingList = () => {
     setitems(updateditems);
   }
 
+  function submitEdits(id) {
+    const updateditems = items.map((item) => {
+      if (editingText === ""){
+        setItemErrorMsgLi("Field cannot be empty");
+      } else if (item.id === id) {
+        item.text = editingText;
+        setItemErrorMsgLi("");
+      } 
+      return item; 
+    });
+    localStorage.setItem("items", JSON.stringify(updateditems));
+    setitems(updateditems);
+    setitemEditing(null);
+  }
+
   return (
     <div id="item-list">
       <h1>Shopping List</h1>
@@ -70,10 +88,25 @@ const ShoppingList = () => {
               id="completed"
               checked={item.completed}
               onChange={() => toggleComplete(item.id)}
+              placeholder={itemErrorMsgLi}
             />
+            {item.id === itemEditing ? (
+              <input
+                type="text"
+                onChange={(e) => setEditingText(e.target.value)}
+                placeholder={itemErrorMsgLi}
+              />
+            ) : (
               <div className="itemText">{item.text}</div>
+            )}
           </div>
           <div className="item-actions">
+            {item.id === itemEditing ? (
+              <button onClick={() => submitEdits(item.id)}>Submit</button>
+            ) : (
+              <button onClick={() => setitemEditing(item.id)}>Edit</button>
+            )}
+
             <button onClick={() => deleteitem(item.id)}>Delete</button>
           </div>
         </div>
