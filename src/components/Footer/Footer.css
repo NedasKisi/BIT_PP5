@@ -1,0 +1,9 @@
+.footer-wrap {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color:RGB(57, 57, 57);
+    height:70px;
+    color: rgb(255, 253, 253);
+}

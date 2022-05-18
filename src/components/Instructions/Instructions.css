@@ -1,0 +1,17 @@
+.instructionsWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height:798px;
+    font-family:'Zen Maru Gothic', sans-serif;;
+}
+
+@media screen and (max-width: 420px) {
+    h3 {
+       margin-left:1em;
+       word-wrap: normal;
+   }   
+}
+
+
