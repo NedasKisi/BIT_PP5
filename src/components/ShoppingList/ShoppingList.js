@@ -77,6 +77,7 @@ const ShoppingList = () => {
           onChange={(e) => setitem(e.target.value)}
           value={item}
           placeholder={itemErrorMsg}
+          maxLength={20}
         />
         <button type="submit">Add Item</button>
       </form>
@@ -89,12 +90,14 @@ const ShoppingList = () => {
               checked={item.completed}
               onChange={() => toggleComplete(item.id)}
               placeholder={itemErrorMsgLi}
+              maxLength={20}
             />
             {item.id === itemEditing ? (
               <input
                 type="text"
                 onChange={(e) => setEditingText(e.target.value)}
                 placeholder={itemErrorMsgLi}
+                maxLength={20}
               />
             ) : (
               <div className="itemText">{item.text}</div>
