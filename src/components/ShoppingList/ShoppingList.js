@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ShoppingList.css";
 
 const ShoppingList = () => {
   const [items, setitems] = useState([]);
   const [item, setitem] = useState("");
   const [itemErrorMsg, setItemErrorMsg] = useState("")
+
+  useEffect(() => {
+    const loadeditems = JSON.parse(localStorage.getItem("items"));
+    if (loadeditems) {
+      setitems(loadeditems || []);
+    }
+  }, []);
+
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -24,6 +32,7 @@ const ShoppingList = () => {
     }    
   }
 
+  
   return (
     <div id="item-list">
       <h1>Shopping List</h1>
